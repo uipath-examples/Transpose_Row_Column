@@ -1,0 +1,306 @@
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="行と列入れ替え"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
+ xmlns:sd="clr-namespace:System.Data;assembly=System.Data"
+ xmlns:ui="http://schemas.uipath.com/workflow/activities"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="int_InCoulmnIndex" Type="InArgument(x:Int32)" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>UiPath.Orchestrator.Client</x:String>
+      <x:String>UiPath.Orchestrator.Client.Models</x:String>
+      <x:String>UiPath.Excel.Activities</x:String>
+      <x:String>UiPath.CSV.Activities</x:String>
+      <x:String>UiPath.Excel</x:String>
+      <x:String>UiPath.CSV</x:String>
+      <x:String>UiPath.Mail.Activities</x:String>
+      <x:String>UiPath.Mail.Exchange.Activities</x:String>
+      <x:String>UiPath.Mail.IMAP.Activities</x:String>
+      <x:String>UiPath.Mail.Outlook.Activities</x:String>
+      <x:String>UiPath.Mail.POP3.Activities</x:String>
+      <x:String>UiPath.Mail.SMTP.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>UiPath.Studio.Plugin.Workflow</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.OrchestratorClient</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>UiPath.Mail.Activities</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="行と列入れ替え" sap2010:WorkflowViewState.IdRef="Sequence_183">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="sd:DataTable" Name="dt_test" />
+      <Variable x:TypeArguments="sd:DataTable" Name="dt_OutDataTable" />
+      <Variable x:TypeArguments="x:Int32" Name="int_InCoulmnIndex" />
+    </Sequence.Variables>
+    <ui:ExcelApplicationScope Password="{x:Null}" DisplayName="Excel アプリケーションスコープ" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_21" WorkbookPath="C:\uipath_test\RowChangeColumn.xlsx">
+      <ui:ExcelApplicationScope.Body>
+        <ActivityAction x:TypeArguments="ui:WorkbookApplication">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
+          </ActivityAction.Argument>
+          <Sequence DisplayName="実行" sap2010:WorkflowViewState.IdRef="Sequence_187">
+            <Sequence.Variables>
+              <Variable x:TypeArguments="sd:DataTable" Name="dt_inDataTable" />
+              <Variable x:TypeArguments="x:Int32" Name="int_InRowIndex" />
+            </Sequence.Variables>
+            <ui:ExcelReadRange AddHeaders="False" DataTable="[dt_inDataTable]" DisplayName="入り替え前のデータテーブル取得 範囲を読み込み" sap2010:WorkflowViewState.IdRef="ExcelReadRange_14" SheetName="Sheet1">
+              <ui:ExcelReadRange.Range>
+                <InArgument x:TypeArguments="x:String">
+                  <Literal x:TypeArguments="x:String" Value="" />
+                </InArgument>
+              </ui:ExcelReadRange.Range>
+            </ui:ExcelReadRange>
+            <Assign DisplayName="入り替え後のデータテーブル定義　代入" sap2010:WorkflowViewState.IdRef="Assign_99">
+              <Assign.To>
+                <OutArgument x:TypeArguments="sd:DataTable">[dt_OutDataTable]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="sd:DataTable">[new DataTable()]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <Assign DisplayName="入り替え前のデータテーブル行番号　代入" sap2010:WorkflowViewState.IdRef="Assign_100">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:Int32">[int_InRowIndex]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:Int32">0</InArgument>
+              </Assign.Value>
+            </Assign>
+            <ui:ForEachRow CurrentIndex="{x:Null}" DataTable="[dt_inDataTable]" DisplayName="入り替え前のデータテーブル行　繰り返し (各行)" sap2010:WorkflowViewState.IdRef="ForEachRow_17">
+              <ui:ForEachRow.Body>
+                <ActivityAction x:TypeArguments="sd:DataRow">
+                  <ActivityAction.Argument>
+                    <DelegateInArgument x:TypeArguments="sd:DataRow" Name="in_row" />
+                  </ActivityAction.Argument>
+                  <Sequence DisplayName="Body" sap2010:WorkflowViewState.IdRef="Sequence_184">
+                    <ui:AddDataColumn x:TypeArguments="x:Object" Column="{x:Null}" DefaultValue="{x:Null}" AllowDBNull="True" sap2010:Annotation.AnnotationText="入り替え後のデータテーブルに列を追加する" AutoIncrement="False" ColumnName="[string.Format(&quot;column{0}&quot;,int_InRowIndex.ToString)]" DataTable="[dt_OutDataTable]" DisplayName="入り替え後　データ列を追加" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_1" MaxLength="100" Unique="False" />
+                    <Assign DisplayName="次の行番号　代入" sap2010:WorkflowViewState.IdRef="Assign_106">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Int32">[int_InRowIndex]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Int32">[int_InRowIndex+1]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                  </Sequence>
+                </ActivityAction>
+              </ui:ForEachRow.Body>
+            </ui:ForEachRow>
+            <Assign DisplayName="入り替え前のデータ列番号  代入" sap2010:WorkflowViewState.IdRef="Assign_102">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:Int32">[int_InCoulmnIndex]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:Int32">0</InArgument>
+              </Assign.Value>
+            </Assign>
+            <While DisplayName="入り替え前のデータテーブル列数　繰り返し (前判定)" sap2010:WorkflowViewState.IdRef="While_2" Condition="[int_InCoulmnIndex &lt; dt_inDataTable.Columns.Count]">
+              <Sequence DisplayName="列単位で処理" sap2010:WorkflowViewState.IdRef="Sequence_186">
+                <Sequence.Variables>
+                  <Variable x:TypeArguments="scg:List(x:Object)" Name="list_OutRow" />
+                </Sequence.Variables>
+                <Assign DisplayName="入り替え後配列　代入" sap2010:WorkflowViewState.IdRef="Assign_104">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="scg:List(x:Object)">[list_OutRow]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="scg:List(x:Object)">[new list(of object)]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <ui:ForEachRow CurrentIndex="{x:Null}" DataTable="[dt_inDataTable]" DisplayName="入り替え前のデータテーブル　繰り返し (各行)" sap2010:WorkflowViewState.IdRef="ForEachRow_18">
+                  <ui:ForEachRow.Body>
+                    <ActivityAction x:TypeArguments="sd:DataRow">
+                      <ActivityAction.Argument>
+                        <DelegateInArgument x:TypeArguments="sd:DataRow" Name="in_row" />
+                      </ActivityAction.Argument>
+                      <Sequence DisplayName="Body" sap2010:WorkflowViewState.IdRef="Sequence_185">
+                        <AddToCollection x:TypeArguments="x:Object" sap2010:Annotation.AnnotationText="入り替え後配列に追加する" Collection="[list_OutRow]" DisplayName="コレクションに追加" sap2010:WorkflowViewState.IdRef="AddToCollection`1_2" Item="[in_row(int_InCoulmnIndex)]" />
+                      </Sequence>
+                    </ActivityAction>
+                  </ui:ForEachRow.Body>
+                </ui:ForEachRow>
+                <ui:AddDataRow DataRow="{x:Null}" sap2010:Annotation.AnnotationText="入り替え後テータテーブルに行を追加する" ArrayRow="[list_OutRow.ToArray]" DataTable="[dt_OutDataTable]" DisplayName="データ行を追加" sap2010:WorkflowViewState.IdRef="AddDataRow_10" />
+                <Assign DisplayName="次の列番号　代入" sap2010:WorkflowViewState.IdRef="Assign_107">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:Int32">[int_InCoulmnIndex]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:Int32">[int_InCoulmnIndex+1]</InArgument>
+                  </Assign.Value>
+                </Assign>
+              </Sequence>
+            </While>
+            <ui:ExcelWriteRange AddHeaders="False" DataTable="[dt_OutDataTable]" DisplayName="入り替え後データテーブル出力　範囲に書き込み" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_5" SheetName="Sheet2" StartingCell="A1" />
+          </Sequence>
+        </ActivityAction>
+      </ui:ExcelApplicationScope.Body>
+    </ui:ExcelApplicationScope>
+    <sads:DebugSymbol.Symbol>d0pDOlxyb2JvXDE4X0FFT05fUFJJQ0VfVEFHXEFFT05fUFJJQ0VfVEFHXENvbW1vblzooYzjgajliJflhaXjgozmm7/jgYgueGFtbDBRA78BDgIBAVcFvQEgAgECV5wBV8EBAgFBXQu6ARYCAQNiDWghAgE8aQ1wFgIBOHENeBYCATR5DYwBHQIBJo0BDZQBFgIBIpUBDbgBFQIBCbkBDbkB0gECAQRiPWJPAgE/ZRNlQgIBPmK0AWK8AQIBPW48bk0CATtrPWtOAgE5djd2OAIBN3M4c0gCATV5PnlQAgEyfxOJAR4CASeSATeSATgCASWPATiPAUsCASOWAQ+3ARoCAQuVAXGVAagBAgEKuQHLAbkBzwECAQi5AT65AVECAQa5AbUBuQG9AQIBBYABFYABqQMCAS2BARWIAR4CASiaARGhARoCAR6iARGtASECARauARGuAfIBAgERrwERtgEaAgEMgAHZAYABmQICATCAAaQCgAG3AgIBLoYBP4YBUQIBK4MBQIMBUAIBKZ8BRp8BWwIBIZwBR5wBVAIBH6IBQqIBVAIBHKgBF6oBIgIBF64BlgGuAakBAgEUrgF0rgGLAQIBErQBO7QBUAIBD7EBPLEBTwIBDakBGakBhAICARipAYEBqQGQAQIBGqkB5AGpAYECAgEZ</sads:DebugSymbol.Symbol>
+  </Sequence>
+  <sap2010:WorkflowViewState.ViewStateManager>
+    <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="ExcelReadRange_14" sap:VirtualizedContainerService.HintSize="464,59">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsPinned">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Assign_99" sap:VirtualizedContainerService.HintSize="464,60" />
+      <sap2010:ViewStateData Id="Assign_100" sap:VirtualizedContainerService.HintSize="464,60" />
+      <sap2010:ViewStateData Id="AddDataColumn`1_1" sap:VirtualizedContainerService.HintSize="242,64">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Assign_106" sap:VirtualizedContainerService.HintSize="242,60" />
+      <sap2010:ViewStateData Id="Sequence_184" sap:VirtualizedContainerService.HintSize="264,288">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ForEachRow_17" sap:VirtualizedContainerService.HintSize="464,435">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsPinned">True</x:Boolean>
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Assign_102" sap:VirtualizedContainerService.HintSize="464,60" />
+      <sap2010:ViewStateData Id="Assign_104" sap:VirtualizedContainerService.HintSize="317,60" />
+      <sap2010:ViewStateData Id="AddToCollection`1_2" sap:VirtualizedContainerService.HintSize="200,49">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Sequence_185" sap:VirtualizedContainerService.HintSize="222,173">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ForEachRow_18" sap:VirtualizedContainerService.HintSize="317,320">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsPinned">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="AddDataRow_10" sap:VirtualizedContainerService.HintSize="317,64">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Assign_107" sap:VirtualizedContainerService.HintSize="317,60" />
+      <sap2010:ViewStateData Id="Sequence_186" sap:VirtualizedContainerService.HintSize="339,748">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="While_2" sap:VirtualizedContainerService.HintSize="464,905">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsPinned">True</x:Boolean>
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ExcelWriteRange_5" sap:VirtualizedContainerService.HintSize="464,87">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsPinned">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Sequence_187" sap:VirtualizedContainerService.HintSize="486,2030">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ExcelApplicationScope_21" sap:VirtualizedContainerService.HintSize="500,2179">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsPinned">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Sequence_183" sap:VirtualizedContainerService.HintSize="200,51">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+    </sap2010:ViewStateManager>
+  </sap2010:WorkflowViewState.ViewStateManager>
+</Activity>
